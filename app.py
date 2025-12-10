@@ -82,5 +82,5 @@ def download_file(encoded_url):
     except Exception as e:
         return redirect(url_for('index', error=f'មានកំហុសក្នុងការទាញយកឯកសារ: {e}'))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
