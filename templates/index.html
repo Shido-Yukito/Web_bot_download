@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Downloader ជាមួយ Python</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; text-align: center; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        input[type="text"] { width: 80%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        input[type="submit"], button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+        .error { color: red; margin-top: 15px; border: 1px solid red; padding: 10px; }
+        .info-box { text-align: left; padding: 15px; border: 1px solid #007bff; border-radius: 4px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>កម្មវិធីទាញយកវីដេអូ</h2>
+        
+        {% if error %}
+            <p class="error">⚠️ {{ error }}</p>
+        {% endif %}
+
+        {% if video_data %}
+            <h3>✅ ព័ត៌មានវីដេអូ</h3>
+
+            <div class="info-box">
+                <p><strong>ចំណងជើង:</strong> {{ video_data.title }}</p>
+                <p><strong>រយៈពេល:</strong> {{ video_data.duration }}</p>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <video width="100%" controls poster="{{ video_data.thumbnail }}" style="max-width: 500px; border-radius: 8px;">
+                    <source src="{{ video_data.direct_url }}" type="video/mp4"> 
+                    <p>វីដេអូមិនអាចលេងបានទេ (សូមមើលរូបភាព Thumbnail ខាងក្រោម):</p>
+                </video>
+                <!-- <img src="{{ video_data.thumbnail }}" alt="{{ video_data.title }}" style="width: 100%; max-width: 500px; border-radius: 8px; margin-top: 10px;"> -->
+            </div>
+            
+            <form method="POST" action="/download_file/{{ video_data.encoded_url }}">
+                <input type="submit" value="ចុចទីនេះដើម្បីទាញយកឯកសារ">
+            </form>
+            <p style="margin-top: 15px;"><a href="/">ឬចុចទីនេះដើម្បីទាញយកវីដេអូផ្សេងទៀត</a></p>
+
+        {% else %}
+            <form method="POST" action="/">
+                <input type="text" name="url" placeholder="បញ្ចូល URL វីដេអូនៅទីនេះ (ដូចជា YouTube, Vimeo...)" required>
+                <br>
+                <input type="submit" value="ទាញយកព័ត៌មាន">
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>
